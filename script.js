@@ -6,19 +6,27 @@ myApp.config(function($routeProvider) {
 		templateUrl: "login.html"
 	})
 	.when('/home', {
-		templateUrl: "home.html"
+		resolve:{
+			"check": function($location, $rootScope){
+				if(!$rootScope.loggedIn){
+					$location.path("/login")
+				}
+			}
+		}
+		// templateUrl: "home.html"
 	})
 	.otherwise({
 		redirectTo: "/"
 	});
 });
 
-myApp.controller('LoginCtrl', function($scope, $location){
+myApp.controller('LoginCtrl', function($scope, $location, $rootScope){
 	$scope.title = "Login | Ashraful Islam";
 
 	$scope.login = function(uname, passwd){
 		if(uname=="admin" && passwd == "admin"){
-			$location.path("/");
+			$rootScope.loggedIn = true;
+			$location.path("/home");
 		}
 	};
 });
