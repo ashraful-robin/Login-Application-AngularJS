@@ -5,14 +5,20 @@ myApp.config(function($routeProvider) {
 	.when('/login', {
 		templateUrl: "login.html"
 	})
-	.when('/', {
-		templateUrl: "index.html"
+	.when('/home', {
+		templateUrl: "home.html"
 	})
 	.otherwise({
-		redirectTo: "/login"
-	})
+		redirectTo: "/"
+	});
 });
 
-myApp.controller('LoginCtrl', function($scope){
+myApp.controller('LoginCtrl', function($scope, $location){
 	$scope.title = "Login | Ashraful Islam";
+
+	$scope.login = function(uname, passwd){
+		if(uname=="admin" && passwd == "admin"){
+			$location.path("/");
+		}
+	};
 });
